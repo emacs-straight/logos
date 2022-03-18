@@ -5,9 +5,9 @@
 #+options: ':t toc:nil author:t email:t num:t
 #+startup: content
 
-#+macro: stable-version 0.1.0
-#+macro: release-date 2022-03-11
-#+macro: development-version 0.2.0-dev
+#+macro: stable-version 0.2.0
+#+macro: release-date 2022-03-17
+#+macro: development-version 0.3.0-dev
 #+macro: file @@texinfo:@file{@@$1@@texinfo:}@@
 #+macro: space @@texinfo:@: @@
 #+macro: kbd @@texinfo:@kbd{@@$1@@texinfo:}@@
@@ -91,7 +91,7 @@ want:
   (define-key map [remap backward-page] #'logos-backward-page-dwim))
 #+end_src
 
-On stanard Emacs, those key bindings are: =C-x n n=, =C-x ]=, =C-x [=.
+On standard Emacs, those key bindings are: =C-x n n=, =C-x ]=, =C-x [=.
 The ~logos-narrow-dwim~ is not necessary for users who already know how
 to narrow effectively.  Such users may still want to bind it to a key.
 
@@ -111,9 +111,6 @@ buffers (~logos-variable-pitch~), make the buffer read-only
 (~logos-buffer-read-only~), and center the buffer in its window if the
 =olivetti= package is installed (~logos-olivetti~).  All these variables
 are buffer-local.
-
-[ User options have changed as part of {{{development-version}}}.
-  Especially the glue code for Olivetti. ]
 
 Logos is the familiar word derived from Greek (watch my presentation on
 philosophy about Cosmos, Logos, and the living universe:
@@ -196,9 +193,6 @@ changes out-of-the-box ([[#h:2bb57369-352a-43bf-afe3-0bed2fcc7359][Extra tweaks]
   everything is buffer-local, so it is possible to use file variables as
   described in the Emacs manual.
 
-[ User options have changed as part of {{{development-version}}}.
-  Especially the glue code for Olivetti. ]
-
 #+begin_src emacs-lisp
 (require 'logos)
 
@@ -240,8 +234,6 @@ motions through the ~logos-page-motion-hook~.
 :CUSTOM_ID: h:8864fb36-53d6-40a2-8e0a-2c609e06d70f
 :END:
 #+cindex: Automatically toggle olivetti-mode
-
-[ Changed as part of {{{development-version}}} ]
 
 Install the excellent =olivetti= package by Paul W. Rankin.  Then set
 ~logos-olivetti~ to non-nil.
@@ -412,6 +404,21 @@ result can look like this:
         (org-mode . ,(format "\\(^\\*\\{1,3\\} +\\|^-\\{5\\}$\\|%s\\)" logos--page-delimiter))
         (t . ,(or outline-regexp logos--page-delimiter))))
 #+end_src
+
+* Acknowledgements
+:PROPERTIES:
+:CUSTOM_ID: h:300c12cb-853e-4e06-9627-e1d6fd3a3a38
+:END:
+#+cindex: Contributors
+
+Logos is meant to be a collective effort.  Every bit of help matters.
+
++ Author/maintainer :: Protesilaos Stavrou.
+
++ Contributions to code or the manual :: Philip Kaludercic, Remco van 't
+  Veer, and user Ypot.
+
++ Ideas and user feedback :: Daniel Mendler.
 
 * GNU Free Documentation License
 :PROPERTIES:
