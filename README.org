@@ -5,9 +5,9 @@
 #+options: ':t toc:nil author:t email:t num:t
 #+startup: content
 
-#+macro: stable-version 0.3.0
-#+macro: release-date 2022-03-30
-#+macro: development-version 0.4.0-dev
+#+macro: stable-version 0.4.0
+#+macro: release-date 2022-06-02
+#+macro: development-version 0.5.0-dev
 #+macro: file @@texinfo:@file{@@$1@@texinfo:}@@
 #+macro: space @@texinfo:@: @@
 #+macro: kbd @@texinfo:@kbd{@@$1@@texinfo:}@@
@@ -118,8 +118,6 @@ buffers (~logos-variable-pitch~), make the buffer read-only
 ~fringe~ face (~logos-hide-fringe~).  All these variables are
 buffer-local.
 
-[ ~logos-hide-fringe~ is part of {{{development-version}}} ]
-
 Logos is the familiar word derived from Greek (watch my presentation on
 philosophy about Cosmos, Logos, and the living universe:
 <https://protesilaos.com/books/2022-02-05-cosmos-logos-living-universe/>),
@@ -226,6 +224,9 @@ changes out-of-the-box ([[#h:2bb57369-352a-43bf-afe3-0bed2fcc7359][Extra tweaks]
               logos-buffer-read-only nil
               logos-scroll-lock nil
               logos-olivetti nil)
+
+;; Also check this manual for `logos-focus-mode-extra-functions'.  It is
+;; a hook that lets you extend `logos-focus-mode'.
 
 (let ((map global-map))
   (define-key map [remap narrow-to-region] #'logos-narrow-dwim)
@@ -419,6 +420,48 @@ result can look like this:
         (t . ,(or outline-regexp logos--page-delimiter))))
 #+end_src
 
+** Leverage logos-focus-mode-extra-functions
+:PROPERTIES:
+:CUSTOM_ID: h:a2540f2f-1159-4e5c-a486-e1f2cb63fee8
+:END:
+#+cindex: User-level extensions to logos-focus-mode
+
+#+vindex: logos-focus-mode-extra-functions
+The ~logos-focus-mode-extra-functions~ is a normal hook that runs when
+~logos-focus-mode~ is enabled.  It gives users the power to write their
+own extensions that change how the buffer works when that mode is
+toggled on/off.
+
+The hook is designed to call functions without an argument.  An example
+function that sets a variable is ~logos--buffer-read-only~; one that
+sets a mode is ~logos--scroll-lock~; another that sets the mode of an
+external package is ~logos--olivetti~; while ~logos--hide-fringe~
+provides yet another useful sample.
+
+*** Conditionally toggle org-indent-mode
+:PROPERTIES:
+:CUSTOM_ID: h:ef719925-8d0b-479a-a87e-32b727578bfc
+:END:
+
+Here is a snippet that relies on ~logos-focus-mode-extra-functions~ to
+extend the functionality of ~logos-focus-mode~ at the user level
+([[#h:a2540f2f-1159-4e5c-a486-e1f2cb63fee8][Leverage logos-focus-mode-extra-functions]]).
+
+#+begin_src emacs-lisp
+(defvar my-logos-org-indent nil
+  "When t, disable `org-indent-mode' during `logos-focus-mode'.")
+
+(defun my-logos-org-indent ()
+  "Set `my-logos-org-indent' in `logos-focus-mode'."
+  (when my-logos-org-indent
+    ;; Disable `org-indent-mode' when `logos-focus-mode' is enabled and
+    ;; restore it when `logos-focus-mode' is disabled.  The
+    ;; `logos--mode' function takes care of the technicalities.
+    (logos--mode 'org-indent-mode -1)))
+
+(add-hook 'logos-focus-mode-extra-functions #'my-logos-org-indent)
+#+end_src
+
 * Acknowledgements
 :PROPERTIES:
 :CUSTOM_ID: h:300c12cb-853e-4e06-9627-e1d6fd3a3a38
@@ -432,7 +475,7 @@ Logos is meant to be a collective effort.  Every bit of help matters.
 + Contributions to code or the manual :: Daniel Mendler, Omar Antolín
   Camarena, Philip Kaludercic, Remco van 't Veer, and user Ypot.
 
-+ Ideas and user feedback :: Daniel Mendler.
++ Ideas and/or user feedback :: Daniel Mendler, Ypot.
 
 * GNU Free Documentation License
 :PROPERTIES:
