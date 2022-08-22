@@ -27,38 +27,62 @@
 
 ;;; Commentary:
 ;;
-;; This package provides a simple "focus mode" which can be applied to
-;; any buffer for reading, writing, or even doing a presentation.  The
-;; buffer can be divided in pages using the `page-delimiter', outline
-;; structure, or any other pattern.  Commands are provided to move
-;; between those pages.  These motions work even when narrowing is in
-;; effect (and they preserve it).  `logos.el' is designed to be simple
-;; by default and easy to extend.  This manual provides concrete
-;; examples to that end.
+;; This package provides a simple "focus mode" which can be applied to any
+;; buffer for reading, writing, or even doing a presentation.  The buffer
+;; can be divided in pages using the `page-delimiter', outline structure,
+;; or any other pattern.  Commands are provided to move between those
+;; pages.  These motions work even when narrowing is in effect (and they
+;; preserve it).  `logos.el' is designed to be simple by default and easy
+;; to extend.  This manual provides concrete examples to that end.
 ;;
-;; Logos does not define any key bindings.  Try something like this:
+;; What constitutes a page delimiter is determined by the user options
+;; `logos-outlines-are-pages' and `logos-outline-regexp-alist'.  By
+;; default, this only corresponds to the `^L' character (which can be
+;; inserted using the standard keys with `C-q C-l').
+;;
+;; Logos does not define any key bindings.  Try something like this, if you
+;; want:
 ;;
 ;;     (let ((map global-map))
 ;;       (define-key map [remap narrow-to-region] #'logos-narrow-dwim)
 ;;       (define-key map [remap forward-page] #'logos-forward-page-dwim)
 ;;       (define-key map [remap backward-page] #'logos-backward-page-dwim))
 ;;
-;; By default those key bindings are: C-x n n, C-x ], C-x [.
+;; On standard Emacs, those key bindings are: `C-x n n', `C-x ]', `C-x ['.
+;; The `logos-narrow-dwim' is not necessary for users who already know how
+;; to narrow effectively.  Such users may still want to bind it to a key.
 ;;
-;; The `logos-focus-mode' tweaks the aesthetics of the current buffer.
-;; When enabled it sets the buffer-local value of these user options:
-;; `logos-scroll-lock', `logos-variable-pitch',`logos-hide-mode-line',
-;; `logos-hide-buffer-boundaries', `logos-buffer-read-only',
-;; `logos-olivetti', and `logos-hide-fringe'.
+;; For users running Emacs version 28 or higher, Logos defines the
+;; `logos-repeat-map' which is activated when `repeat-mode' is enabled.
+;; This means that page motions, `C-x ]' and `C-x [', can be repeated by
+;; following them up with `]' and `[', respectively.  The repetition stops
+;; when another command is invoked.
 ;;
-;; Logos is the familiar word derived from Greek (watch my presentation
-;; on philosophy about Cosmos, Logos, and the living universe:
+;; Logos provides some optional aesthetic tweaks which come into effect
+;; when the buffer-local `logos-focus-mode' is enabled.  These will hide
+;; the mode line (`logos-hide-mode-line'), disable the buffer boundary
+;; indicators (`indicate-buffer-boundaries'), enable `scroll-lock-mode'
+;; (`logos-scroll-lock'), use `variable-pitch-mode' in non-programming
+;; buffers (`logos-variable-pitch'), make the buffer read-only
+;; (`logos-buffer-read-only'), center the buffer in its window if the
+;; `olivetti' package is installed (`logos-olivetti'), and hide the
+;; `fringe' face (`logos-hide-fringe').  All these variables are
+;; buffer-local.
+;;
+;; Furthermore, the `logos-focus-mode' establishes a bespoke keymap, which
+;; can be used to, for example, bind the arrow keys to page motions.  The
+;; keymap is `logos-focus-mode-map' and is empty by default (we do not
+;; define any keys and trust the user to pick their own).
+;;
+;; Logos is the familiar word derived from Greek (watch my presentation on
+;; philosophy about Cosmos, Logos, and the living universe:
 ;; <https://protesilaos.com/books/2022-02-05-cosmos-logos-living-universe/>),
 ;; though it also stands for these two perhaps equally insightful
 ;; backronyms about the mechanics of this package:
 ;;
-;; 1. ^L Only Generates Ostensible Slides
+;; 1. `^L' Only Generates Ostensible Slides
 ;; 2. Logos Optionally Garners Outline Sections
+;;
 ;;
 ;; Consult the manual for all sorts of tweaks and extras:
 ;; <https://protesilaos.com/emacs/logos>.
@@ -79,6 +103,7 @@ What constitutes an outline is determined by the user option
 When this variable is nil, pages are demarcated by the
 `page-delimiter'."
   :type 'boolean
+  :package-version '(logos . "0.1.0")
   :group 'logos)
 
 (defconst logos--page-delimiter (default-value 'page-delimiter)
@@ -97,6 +122,7 @@ The major mode also targets any of its derivatives.  For example,
 `emacs-lisp-mode' so one only needs to set the outline regexp of
 the latter."
   :type `(alist :key-type symbol :value-type string) ; TODO 2022-03-02: ensure symbol is mode?
+  :package-version '(logos . "0.1.0")
   :group 'logos)
 
 (defcustom logos-hide-mode-line nil
@@ -104,6 +130,7 @@ the latter."
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.1.0")
   :local t)
 
 (defcustom logos-scroll-lock nil
@@ -111,16 +138,19 @@ This is only relevant when `logos-focus-mode' is enabled."
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.1.0")
   :local t)
 
 (defcustom logos-variable-pitch nil
-  "When non-nil, `text-mode' buffers use `variable-pitch-mode'.
+  "When non-nil, use `variable-pitch-mode' where appropriate.
 In programming modes the default font is always used, as that is
-assumed to be a monospaced typeface.
+assumed to be a monospaced typeface, which is appropriate for
+spacing-sensitive text.
 
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.5.0")
   :local t)
 
 (define-obsolete-variable-alias
@@ -133,6 +163,7 @@ This is only relevant when `logos-focus-mode' is enabled."
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.4.0")
   :local t)
 
 (defcustom logos-buffer-read-only nil
@@ -140,6 +171,7 @@ This is only relevant when `logos-focus-mode' is enabled."
 This applies when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.2.0")
   :local t)
 
 (defcustom logos-olivetti nil
@@ -147,6 +179,7 @@ This applies when `logos-focus-mode' is enabled."
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.2.0")
   :local t)
 
 (defcustom logos-hide-fringe nil
@@ -154,6 +187,7 @@ This is only relevant when `logos-focus-mode' is enabled."
 This is only relevant when `logos-focus-mode' is enabled."
   :type 'boolean
   :group 'logos
+  :package-version '(logos . "0.4.0")
   :local t)
 
 (defcustom logos-focus-mode-extra-functions nil
@@ -167,6 +201,7 @@ yet another useful sample.
 
 Consult the Logos manual for concrete do-it-yourself examples."
   :type 'hook
+  :package-version '(logos . "0.4.0")
   :group 'logos)
 
 ;;;; General utilities
@@ -402,7 +437,7 @@ options: `logos-scroll-lock', `logos-variable-pitch',
 
 (defun logos--variable-pitch ()
   "Set `logos-variable-pitch'."
-  (when (and logos-variable-pitch (derived-mode-p 'text-mode))
+  (when (and logos-variable-pitch (not (derived-mode-p 'prog-mode)))
     (logos--mode 'variable-pitch-mode 1)))
 
 (defun logos--scroll-lock ()
