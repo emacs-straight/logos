@@ -6,7 +6,7 @@
 ;; Maintainer: Logos Development <~protesilaos/logos@lists.sr.ht>
 ;; URL: https://git.sr.ht/~protesilaos/logos
 ;; Mailing-List: https://lists.sr.ht/~protesilaos/logos
-;; Version: 0.4.0
+;; Version: 0.5.0
 ;; Package-Requires: ((emacs "27.1"))
 ;; Keywords: convenience, focus, writing, presentation, narrowing
 
@@ -501,14 +501,17 @@ options: `logos-scroll-lock', `logos-variable-pitch',
       (logos--hide-fringe))))
 
 (defun logos-update-fringe-in-buffers ()
-  "Run `logos--update-fringe' through the `buffer-list'.
+  "Update the `fringe' face across all relevant buffers.
 This is only relevant if the user option `logos-hide-fringe' is
 non-nil and the `logos-focus-mode' is enabled.
 
 Bind this function to a hook that runs at the post theme load
 phase.  For example: `modus-themes-after-load-theme-hook' from
 the `modus-themes' (`modus-operandi' and `modus-vivendi' themes
-are built into Emacs)."
+are built into Emacs).
+
+The Logos manual explains how to implement such a hook for any
+theme."
   (mapc #'logos--update-fringe (buffer-list)))
 
 (provide 'logos)
