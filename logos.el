@@ -6,7 +6,7 @@
 ;; Maintainer: Logos Development <~protesilaos/logos@lists.sr.ht>
 ;; URL: https://git.sr.ht/~protesilaos/logos
 ;; Mailing-List: https://lists.sr.ht/~protesilaos/logos
-;; Version: 1.0.1
+;; Version: 1.1.0
 ;; Package-Requires: ((emacs "27.1"))
 ;; Keywords: convenience, focus, writing, presentation, narrowing
 
@@ -199,14 +199,19 @@ This is only relevant when `logos-focus-mode' is enabled."
   :package-version '(logos . "0.4.0")
   :local t)
 
-(defcustom logos-focus-mode-extra-functions nil
+(define-obsolete-variable-alias
+  'logos-focus-mode-extra-functions
+  'logos-focus-mode-hook
+  "1.1.0")
+
+(defcustom logos-focus-mode-hook nil
   "List of functions to execute when `logos-focus-mode' is enabled.
 
-Each function is run without an argument.  An example that sets a
-variable is `logos--buffer-read-only'; one that sets a mode is
-`logos--scroll-lock'; another that sets the mode of an external
-package is `logos--olivetti'; while `logos--hide-fringe' provides
-yet another useful sample.
+Each function is called without an argument.  An example that
+sets a variable is `logos--buffer-read-only'; one that sets a
+mode is `logos--scroll-lock'; another that sets the mode of an
+external package is `logos--olivetti'; while `logos--hide-fringe'
+provides yet another useful sample.
 
 Consult the Logos manual for concrete do-it-yourself examples.
 
@@ -226,14 +231,19 @@ and disabled, then use the `logos-focus-mode-hook' instead."
 
 ;;;; Page motions
 
-(defconst logos--page-delimiter (default-value 'page-delimiter)
+(define-obsolete-variable-alias
+  'logos--page-delimiter
+  'logos-page-delimiter
+  "1.1.0")
+
+(defconst logos-page-delimiter (default-value 'page-delimiter)
   "The default value of `page-delimiter'.")
 
 (defun logos--outline-or-delimiter ()
   "Return the current `outline-regexp' or page delimiter."
   (if (bound-and-true-p outline-regexp)
       outline-regexp
-    logos--page-delimiter))
+    logos-page-delimiter))
 
 (defun logos--outline-regexp ()
   "Return page delimiter from `logos-outline-regexp-alist'."
@@ -243,11 +253,16 @@ and disabled, then use the `logos-focus-mode-hook' instead."
         (alist-get (get mode 'derived-mode-parent) outline)
         (logos--outline-or-delimiter))))
 
-(defun logos--page-delimiter ()
+(define-obsolete-function-alias
+  'logos--page-delimiter
+  'logos-page-delimiter
+  "1.1.0")
+
+(defun logos-page-delimiter ()
   "Determine the `page-delimiter'."
   (if logos-outlines-are-pages
       (setq-local page-delimiter (logos--outline-regexp))
-    (setq-local page-delimiter logos--page-delimiter)))
+    (setq-local page-delimiter logos-page-delimiter)))
 
 (defun logos--narrow-to-page (count &optional back)
   "Narrow to COUNTth page with optional BACK motion."
@@ -289,7 +304,7 @@ See `logos-forward-page-dwim' or `logos-backward-page-dwim'.")
 With optional numeric COUNT move by that many pages.  With
 optional BACK perform the motion backwards."
   (let ((cmd (if back #'backward-page #'forward-page)))
-    (logos--page-delimiter)
+    (logos-page-delimiter)
     (if (buffer-narrowed-p)
         (logos--narrow-to-page count back)
       (funcall cmd count)
@@ -344,7 +359,7 @@ page."
   "Return non-nil if there is a `page-delimiter' in the buffer.
 This function does not use `widen': it only checks the accessible
 portion of the buffer."
-  (let ((delimiter (logos--page-delimiter)))
+  (let ((delimiter (logos-page-delimiter)))
     (or (save-excursion (re-search-forward delimiter nil t))
         (save-excursion (re-search-backward delimiter nil t)))))
 
@@ -391,11 +406,17 @@ If narrowing is in effect, widen the view."
 
 ;;;; Optional "focus mode" and utilities
 
-;; I learnt about the method of using `logos--mode' and `logos--set'
-;; from Daniel Mendler: <https://github.com/minad>.
+;; I learnt about the method of using `logos-set-mode-arg' and
+;; `logos-set-buffer-local-value' from Daniel Mendler:
+;; <https://github.com/minad>.
 (defvar-local logos--restore nil)
 
-(defun logos--mode (mode arg)
+(define-obsolete-function-alias
+  'logos--mode
+  'logos-set-mode-arg
+  "1.1.0")
+
+(defun logos-set-mode-arg (mode arg)
   "Set MODE to ARG.
 ARG is either 1 or -1.  The current value changes to its
 alternate, thus toggling MODE."
@@ -404,7 +425,12 @@ alternate, thus toggling MODE."
       (push (lambda () (funcall mode old)) logos--restore)
       (funcall mode arg))))
 
-(defun logos--set (var val)
+(define-obsolete-function-alias
+  'logos--set
+  'logos-set-buffer-local-value
+  "1.1.0")
+
+(defun logos-set-buffer-local-value (var val)
   "Set VAR to buffer-local VAL."
   (let ((old (and (boundp var) (symbol-value var))))
     (unless (equal old val)
@@ -444,7 +470,7 @@ options: `logos-scroll-lock', `logos-variable-pitch',
   (setq logos--restore nil)
   (when logos-focus-mode
     (logos--setup)
-    (run-hooks 'logos-focus-mode-extra-functions)))
+    (run-hooks 'logos-focus-mode-hook)))
 
 (defun logos--setup ()
   "Set up aesthetics for presentation."
@@ -463,22 +489,22 @@ options: `logos-scroll-lock', `logos-variable-pitch',
 (defun logos--variable-pitch ()
   "Set `logos-variable-pitch'."
   (when (and logos-variable-pitch (not (derived-mode-p 'prog-mode)))
-    (logos--mode 'variable-pitch-mode 1)))
+    (logos-set-mode-arg 'variable-pitch-mode 1)))
 
 (defun logos--scroll-lock ()
   "Set `logos-scroll-lock'."
   (when logos-scroll-lock
-    (logos--mode 'scroll-lock-mode 1)))
+    (logos-set-mode-arg 'scroll-lock-mode 1)))
 
 (defun logos--indicate-buffer-boundaries ()
   "Set `logos-hide-buffer-boundaries'."
   (when logos-hide-buffer-boundaries
-    (logos--set 'indicate-buffer-boundaries nil)))
+    (logos-set-buffer-local-value 'indicate-buffer-boundaries nil)))
 
 (defun logos--hide-cursor ()
   "Set `logos-hide-cursor'."
   (when logos-hide-cursor
-    (logos--set 'cursor-type nil)))
+    (logos-set-buffer-local-value 'cursor-type nil)))
 
 ;; FIXME 2022-03-13: The mode line is not redrawn properly.  Not even
 ;; with `force-mode-line-update', unless something happens like
@@ -494,17 +520,17 @@ options: `logos-scroll-lock', `logos-variable-pitch',
 (defun logos--hide-mode-line ()
   "Set `logos-hide-mode-line'."
   (when logos-hide-mode-line
-    (logos--set 'mode-line-format nil)))
+    (logos-set-buffer-local-value 'mode-line-format nil)))
 
 (defun logos--buffer-read-only ()
   "Set `logos-buffer-read-only'."
   (when logos-buffer-read-only
-    (logos--set 'buffer-read-only t)))
+    (logos-set-buffer-local-value 'buffer-read-only t)))
 
 (defun logos--olivetti ()
   "Set `logos-olivetti'."
   (when (and logos-olivetti (require 'olivetti nil t))
-    (logos--mode 'olivetti-mode 1)))
+    (logos-set-mode-arg 'olivetti-mode 1)))
 
 (defvar-local logos--fringe-remap-cookie nil
   "Cookie of remapped `fringe' face.")
