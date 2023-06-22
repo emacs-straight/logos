@@ -6,7 +6,7 @@
 ;; Maintainer: Logos Development <~protesilaos/logos@lists.sr.ht>
 ;; URL: https://git.sr.ht/~protesilaos/logos
 ;; Mailing-List: https://lists.sr.ht/~protesilaos/logos
-;; Version: 1.1.0
+;; Version: 1.1.1
 ;; Package-Requires: ((emacs "27.1"))
 ;; Keywords: convenience, focus, writing, presentation, narrowing
 
@@ -393,16 +393,17 @@ If narrowing is in effect, widen the view."
     (push-mark (point) t nil))
   (cond
    ((and (use-region-p)
-         (null (buffer-narrowed-p)))
+         (not (buffer-narrowed-p)))
     (narrow-to-region (region-beginning) (region-end)))
-   ((logos--page-p)
+   ((and (logos--page-p)
+         (not (buffer-narrowed-p)))
     ;; Use our own narrow to page function because when
     ;; logos-outlines-are-pages is t, the page delimiter
     ;; is included in the region narrowed to.
     (logos--narrow-to-page 0))
-   ((null (buffer-narrowed-p))
+   ((not (buffer-narrowed-p))
     (logos-narrow-visible-window))
-   ((widen))))
+   (t (widen))))
 
 ;;;; Optional "focus mode" and utilities
 
