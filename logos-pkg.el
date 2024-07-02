@@ -1,2 +1,0 @@
-;; Generated package description from logos.el  -*- no-byte-compile: t -*-
-(define-package "logos" "1.1.1.0.20240224.55443" "Simple focus mode and extras" '((emacs "27.1")) :commit "53d86c1708f19eb774adf70c464bd99fb74fed3e" :authors '(("Protesilaos Stavrou" . "info@protesilaos.com")) :maintainer '("Protesilaos Stavrou" . "info@protesilaos.com") :keywords '("convenience" "focus" "writing" "presentation" "narrowing") :url "https://github.com/protesilaos/logos")
