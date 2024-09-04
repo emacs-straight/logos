@@ -1,21 +1,21 @@
-#+title:                 logos.el: simple focus mode for Emacs with page breaks or outlines
-#+author:                Protesilaos Stavrou
-#+email:                 info@protesilaos.com
-#+language:              en
-#+options:               ':t toc:nil author:t email:t num:t
-#+startup:               content
-#+macro:                 stable-version 1.1.0
-#+macro:                 release-date 2023-06-20
-#+macro:                 development-version 1.2.0-dev
-#+export_file_name:      logos.texi
-#+texinfo_filename:      logos.info
-#+texinfo_dir_category:  Emacs misc features
-#+texinfo_dir_title:     Logos: (logos)
-#+texinfo_dir_desc:      Simple focus mode with page breaks or outlines
-#+texinfo_header:        @set MAINTAINERSITE @uref{https://protesilaos.com,maintainer webpage}
-#+texinfo_header:        @set MAINTAINER Protesilaos Stavrou
-#+texinfo_header:        @set MAINTAINEREMAIL @email{info@protesilaos.com}
-#+texinfo_header:        @set MAINTAINERCONTACT @uref{mailto:info@protesilaos.com,contact the maintainer}
+#+title: logos.el: simple focus mode for Emacs with page breaks or outlines
+#+author: Protesilaos Stavrou
+#+email: info@protesilaos.com
+#+language: en
+#+options: ':t toc:nil author:t email:t num:t
+#+startup: content
+#+macro: stable-version 1.2.0
+#+macro: release-date 2024-09-03
+#+macro: development-version 1.3.0-dev
+#+export_file_name: logos.texi
+#+texinfo_filename: logos.info
+#+texinfo_dir_category: Emacs misc features
+#+texinfo_dir_title: Logos: (logos)
+#+texinfo_dir_desc: Simple focus mode with page breaks or outlines
+#+texinfo_header: @set MAINTAINERSITE @uref{https://protesilaos.com,maintainer webpage}
+#+texinfo_header: @set MAINTAINER Protesilaos Stavrou
+#+texinfo_header: @set MAINTAINEREMAIL @email{info@protesilaos.com}
+#+texinfo_header: @set MAINTAINERCONTACT @uref{mailto:info@protesilaos.com,contact the maintainer}
 
 #+texinfo: @insertcopying
 
@@ -184,7 +184,7 @@ mkdir manual-packages
 cd manual-packages
 
 # Clone this repo, naming it "logos"
-git clone https://git.sr.ht/~protesilaos/logos logos
+git clone https://github.com/protesilaos/logos logos
 #+end_src
 
 Finally, in your =init.el= (or equivalent) evaluate this:
@@ -390,7 +390,7 @@ If the recentering should not affect specific modes, tweak the function
 accordingly:
 
 #+begin_src emacs-lisp
-(defvar my-logos-no-recenter-top-modes 
+(defvar my-logos-no-recenter-top-modes
   '(emacs-lisp-mode lisp-interaction-mode))
 
 (defun my-logos-recenter-top ()
@@ -521,12 +521,11 @@ restores it when ~logos-focus-mode~ is disabled.  The
 Continuing with the examples in this section of the manual, the code
 block below shows how to disable the ~menu-bar-mode~, ~tool-bar-mode~,
 ~tab-bar-mode~, and ~tab-line-mode~ when ~logos-focus-mode~ is
-enabled.  If the modes are already disabled, the corresponding
-function does nothing.  Otherwise it toggles the mode off/on when
+enabled. If the given mode is already disabled, the corresponding
+function does nothing. Otherwise it toggles the mode off/on when
 ~logos-focus-mode~ is enabled/disabled.
 
 #+begin_src emacs-lisp
-;; Assuming the `menu-bar-mode' is enabled by default...
 (defun my-logos-hide-menu-bar ()
   (when logos-focus-mode
     (logos-set-mode-arg 'menu-bar-mode -1)))
@@ -583,8 +582,7 @@ higher).
 #+end_src
 
 Or use the special hook ~enable-theme-functions~ that is part of
-Emacs 29. [ The support of ~logos-update-fringe-in-buffers~ for
-~enable-theme-functions~ is part of {{{development-version}}}. ]
+Emacs 29.
 
 #+begin_src emacs-lisp
 (add-hook 'enable-theme-functions #'logos-update-fringe-in-buffers)
