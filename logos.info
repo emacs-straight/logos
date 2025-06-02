@@ -1,7 +1,7 @@
-This is doc9Io95s.info, produced by makeinfo version 6.8 from
+This is docg9t04k.info, produced by makeinfo version 6.8 from
 logos.texi.
 
-Copyright (C) 2022-2023 Free Software Foundation, Inc.
+Copyright (C) 2022-2025 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -20,12 +20,12 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: doc9Io95s.info,  Node: Top,  Next: Overview,  Up: (dir)
+File: docg9t04k.info,  Node: Top,  Next: Overview,  Up: (dir)
 
 logos.el: simple focus mode for Emacs with page breaks or outlines
 ******************************************************************
 
-Copyright (C) 2022-2023 Free Software Foundation, Inc.
+Copyright (C) 2022-2025 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -100,7 +100,7 @@ Indices
 
 
 
-File: doc9Io95s.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
+File: docg9t04k.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
 
 1 Overview
 **********
@@ -165,7 +165,7 @@ backronyms about the mechanics of this package:
   2. Logos Optionally Goes through Outline Sections
 
 
-File: doc9Io95s.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
+File: docg9t04k.info,  Node: Installation,  Next: Sample configuration,  Prev: Overview,  Up: Top
 
 2 Installation
 **************
@@ -176,7 +176,7 @@ File: doc9Io95s.info,  Node: Installation,  Next: Sample configuration,  Prev: O
 * Manual installation::
 
 
-File: doc9Io95s.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
+File: docg9t04k.info,  Node: GNU ELPA package,  Next: Manual installation,  Up: Installation
 
 2.1 GNU ELPA package
 ====================
@@ -195,7 +195,7 @@ archive.  Read:
 <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>.
 
 
-File: doc9Io95s.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
+File: docg9t04k.info,  Node: Manual installation,  Prev: GNU ELPA package,  Up: Installation
 
 2.2 Manual installation
 =======================
@@ -222,7 +222,7 @@ following commands in a shell prompt:
    Everything is in place to set up the package.
 
 
-File: doc9Io95s.info,  Node: Sample configuration,  Next: Extra tweaks,  Prev: Installation,  Up: Top
+File: docg9t04k.info,  Node: Sample configuration,  Next: Extra tweaks,  Prev: Installation,  Up: Top
 
 3 Sample configuration
 **********************
@@ -283,7 +283,7 @@ changes out-of-the-box (*note Extra tweaks::):
      ;; effect when `logos-focus-mode' is enabled.
 
 
-File: doc9Io95s.info,  Node: Extra tweaks,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
+File: docg9t04k.info,  Node: Extra tweaks,  Next: Acknowledgements,  Prev: Sample configuration,  Up: Top
 
 4 Extra tweaks
 **************
@@ -303,7 +303,7 @@ motions through the ‘logos-page-motion-hook’.
 * Update fringe color on theme switch::
 
 
-File: doc9Io95s.info,  Node: Center the buffer in its window,  Next: Make EWW look like the rest of Emacs,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Center the buffer in its window,  Next: Make EWW look like the rest of Emacs,  Up: Extra tweaks
 
 4.1 Center the buffer in its window
 ===================================
@@ -322,7 +322,7 @@ Install the excellent ‘olivetti’ package by Paul W.  Rankin.  Then set
 ‘auto-fill-mode’ disabled.
 
 
-File: doc9Io95s.info,  Node: Make EWW look like the rest of Emacs,  Next: Automatically reveal Org or Outline subtree,  Prev: Center the buffer in its window,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Make EWW look like the rest of Emacs,  Next: Automatically reveal Org or Outline subtree,  Prev: Center the buffer in its window,  Up: Extra tweaks
 
 4.2 Make EWW look like the rest of Emacs
 ========================================
@@ -351,7 +351,7 @@ on them beside EWW (in principle, the aforementioned should not pose any
 problem).
 
 
-File: doc9Io95s.info,  Node: Automatically reveal Org or Outline subtree,  Next: Recenter at the top upon page motion,  Prev: Make EWW look like the rest of Emacs,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Automatically reveal Org or Outline subtree,  Next: Recenter at the top upon page motion,  Prev: Make EWW look like the rest of Emacs,  Up: Extra tweaks
 
 4.3 Automatically reveal Org or Outline subtree
 ===============================================
@@ -390,7 +390,7 @@ one may override the definition of ‘logos-reveal-entry’:
          (outline-show-subtree))))
 
 
-File: doc9Io95s.info,  Node: Recenter at the top upon page motion,  Next: Use outlines and page breaks,  Prev: Automatically reveal Org or Outline subtree,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Recenter at the top upon page motion,  Next: Use outlines and page breaks,  Prev: Automatically reveal Org or Outline subtree,  Up: Extra tweaks
 
 4.4 Recenter at the top upon page motion
 ========================================
@@ -428,7 +428,7 @@ function accordingly:
          (recenter 0)))
 
 
-File: doc9Io95s.info,  Node: Use outlines and page breaks,  Next: Leverage logos-focus-mode-hook,  Prev: Recenter at the top upon page motion,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Use outlines and page breaks,  Next: Leverage logos-focus-mode-hook,  Prev: Recenter at the top upon page motion,  Up: Extra tweaks
 
 4.5 Use outlines and page breaks
 ================================
@@ -484,7 +484,7 @@ end result can look like this:
              (org-mode . ,(format "\\(^\\*\\{1,3\\} +\\|^-\\{5\\}$\\|%s\\)" logos-page-delimiter))))
 
 
-File: doc9Io95s.info,  Node: Leverage logos-focus-mode-hook,  Next: Update fringe color on theme switch,  Prev: Use outlines and page breaks,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Leverage logos-focus-mode-hook,  Next: Update fringe color on theme switch,  Prev: Use outlines and page breaks,  Up: Extra tweaks
 
 4.6 Leverage logos-focus-mode-hook
 ==================================
@@ -507,7 +507,7 @@ use the ‘logos-focus-mode-hook’ instead.
 * Disable menu-bar, tool-bar, tab-bar, tab-line: Disable menu-bar tool-bar tab-bar tab-line.
 
 
-File: doc9Io95s.info,  Node: Conditionally toggle org-indent-mode,  Next: Disable menu-bar tool-bar tab-bar tab-line,  Up: Leverage logos-focus-mode-hook
+File: docg9t04k.info,  Node: Conditionally toggle org-indent-mode,  Next: Disable menu-bar tool-bar tab-bar tab-line,  Up: Leverage logos-focus-mode-hook
 
 4.6.1 Conditionally toggle org-indent-mode
 ------------------------------------------
@@ -527,7 +527,7 @@ restores it when ‘logos-focus-mode’ is disabled.  The
      (add-hook 'logos-focus-mode-hook #'my-logos-org-indent)
 
 
-File: doc9Io95s.info,  Node: Disable menu-bar tool-bar tab-bar tab-line,  Prev: Conditionally toggle org-indent-mode,  Up: Leverage logos-focus-mode-hook
+File: docg9t04k.info,  Node: Disable menu-bar tool-bar tab-bar tab-line,  Prev: Conditionally toggle org-indent-mode,  Up: Leverage logos-focus-mode-hook
 
 4.6.2 Disable menu-bar, tool-bar, tab-bar, tab-line
 ---------------------------------------------------
@@ -567,7 +567,7 @@ is enabled/disabled.
      (add-hook 'logos-focus-mode-hook #'my-logos-hide-tab-line)
 
 
-File: doc9Io95s.info,  Node: Update fringe color on theme switch,  Prev: Leverage logos-focus-mode-hook,  Up: Extra tweaks
+File: docg9t04k.info,  Node: Update fringe color on theme switch,  Prev: Leverage logos-focus-mode-hook,  Up: Extra tweaks
 
 4.7 Update fringe color on theme switch
 =======================================
@@ -613,7 +613,7 @@ setup for such a hook can be configured thus:
      (add-hook 'after-enable-theme-hook #'logos-update-fringe-in-buffers)
 
 
-File: doc9Io95s.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Extra tweaks,  Up: Top
+File: docg9t04k.info,  Node: Acknowledgements,  Next: GNU Free Documentation License,  Prev: Extra tweaks,  Up: Top
 
 5 Acknowledgements
 ******************
@@ -632,7 +632,7 @@ Ideas and/or user feedback
      Xiaoduan, Ypot.
 
 
-File: doc9Io95s.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
+File: docg9t04k.info,  Node: GNU Free Documentation License,  Next: Indices,  Prev: Acknowledgements,  Up: Top
 
 Appendix A GNU Free Documentation License
 *****************************************
@@ -1114,7 +1114,7 @@ software license, such as the GNU General Public License, to permit
 their use in free software.
 
 
-File: doc9Io95s.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
+File: docg9t04k.info,  Node: Indices,  Prev: GNU Free Documentation License,  Up: Top
 
 B Indices
 *********
@@ -1126,7 +1126,7 @@ B Indices
 * Concept index::
 
 
-File: doc9Io95s.info,  Node: Function index,  Next: Variable index,  Up: Indices
+File: docg9t04k.info,  Node: Function index,  Next: Variable index,  Up: Indices
 
 B.1 Function index
 ==================
@@ -1142,7 +1142,7 @@ B.1 Function index
                                                                (line 12)
 
 
-File: doc9Io95s.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
+File: docg9t04k.info,  Node: Variable index,  Next: Concept index,  Prev: Function index,  Up: Indices
 
 B.2 Variable index
 ==================
@@ -1167,7 +1167,7 @@ B.2 Variable index
 * logos-variable-pitch:                  Overview.             (line 38)
 
 
-File: doc9Io95s.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
+File: docg9t04k.info,  Node: Concept index,  Prev: Variable index,  Up: Indices
 
 B.3 Concept index
 =================

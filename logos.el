@@ -1,6 +1,6 @@
 ;;; logos.el --- Simple focus mode and extras -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022-2024  Free Software Foundation, Inc.
+;; Copyright (C) 2022-2025  Free Software Foundation, Inc.
 
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
@@ -575,14 +575,10 @@ options: `logos-scroll-lock', `logos-variable-pitch',
 This is only relevant if the user option `logos-hide-fringe' is
 non-nil and the `logos-focus-mode' is enabled.
 
-Bind this function to a hook that runs at the post theme load
-phase.  For example: `modus-themes-after-load-theme-hook' from
-the `modus-themes' (`modus-operandi' and `modus-vivendi' themes
-are built into Emacs).  Or use the special hook
-`enable-theme-functions' that is part of Emacs 29.
-
-The Logos manual explains how to implement such a hook for any
-theme."
+Bind this function to a hook that runs at the post theme load phase.
+For example: `modus-themes-after-load-theme-hook' from the
+`modus-themes' (which are built into Emacs).  Or use the special hook
+`enable-theme-functions' that is part of Emacs 29."
   (mapc #'logos--update-fringe (buffer-list)))
 
 (provide 'logos)
