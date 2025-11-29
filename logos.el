@@ -89,8 +89,6 @@
 
 ;;; Code:
 
-;;;; General utilities
-
 (defgroup logos ()
   "Simple focus mode and extras."
   :group 'editing)
@@ -229,13 +227,6 @@ and disabled, then use the `logos-focus-mode-hook' instead."
   :package-version '(logos . "0.4.0")
   :group 'logos)
 
-;;;; General utilities
-
-(defun logos--focus-p ()
-  "Return non-nil if `logos-focus-mode' is bound locally."
-  (when (bound-and-true-p logos-focus-mode)
-    (buffer-local-value 'logos-focus-mode (current-buffer))))
-
 ;;;; Page motions
 
 (define-obsolete-variable-alias
@@ -265,12 +256,13 @@ and disabled, then use the `logos-focus-mode-hook' instead."
   'logos-page-delimiter
   "1.1.0")
 
-(defun logos-page-delimiter ()
-  "Determine the `page-delimiter'."
-  (if logos-outlines-are-pages
-      (setq-local page-delimiter (logos--outline-regexp))
-    (setq-local page-delimiter logos-page-delimiter)))
+(defun logos-set-page-delimiter ()
+  "Set `page-delimiter' buffer-locally depending on `logos-outlines-are-pages'.
+Return `page-delimiter'."
+  (setq-local page-delimiter (if logos-outlines-are-pages (logos--outline-regexp) logos-page-delimiter)))
 
+;; TODO 2025-11-26: I do not like this and wish to rewrite it.  Though
+;; it technically works...
 (defun logos--narrow-to-page (count &optional back)
   "Narrow to COUNTth page with optional BACK motion."
   ;; Position point to avoid skipping pages.
@@ -306,12 +298,17 @@ and disabled, then use the `logos-focus-mode-hook' instead."
   "Hook that runs after a page motion.
 See `logos-forward-page-dwim' or `logos-backward-page-dwim'.")
 
+;; TODO 2025-11-26: Refactor this to only accept a COUNT.  We can
+;; infer BACK if COUNT is `minusp'.
 (defun logos--page-motion (&optional count back)
   "Routine for page motions.
 With optional numeric COUNT move by that many pages.  With
 optional BACK perform the motion backwards."
   (let ((cmd (if back #'backward-page #'forward-page)))
-    (logos-page-delimiter)
+    (logos-set-page-delimiter)
+    ;; TODO 2025-11-26: We would be skipping the current page
+    ;; delimiter if we are on its line.  But check if this is releavnt
+    ;; when the buffer is narrowed.
     (if (buffer-narrowed-p)
         (logos--narrow-to-page count back)
       (funcall cmd count)
@@ -366,9 +363,10 @@ page."
   "Return non-nil if there is a `page-delimiter' in the buffer.
 This function does not use `widen': it only checks the accessible
 portion of the buffer."
-  (let ((delimiter (logos-page-delimiter)))
-    (or (save-excursion (re-search-forward delimiter nil t))
-        (save-excursion (re-search-backward delimiter nil t)))))
+  (logos-set-page-delimiter)
+  (save-excursion
+    (goto-char (point-min))
+    (re-search-forward page-delimiter nil t)))
 
 (defun logos-narrow-visible-window ()
   "Narrow buffer to visible window area.
