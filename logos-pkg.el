@@ -1,2 +1,2 @@
-;; Generated package description from logos.el  -*- no-byte-compile: t -*-
-(define-package "logos" "1.2.0.0.20260111.105252" "Simple focus mode and extras" '((emacs "27.1")) :commit "0f6680e48a819057ad43bd0964901c3746dd9f47" :authors '(("Protesilaos Stavrou" . "info@protesilaos.com")) :maintainer '("Protesilaos Stavrou" . "info@protesilaos.com") :keywords '("convenience" "focus" "writing" "presentation" "narrowing") :url "https://github.com/protesilaos/logos")
+;; Generated package description from logos.el  -*- no-byte-compile: t; lexical-binding:t -*-
+(define-package "logos" "1.2.0.0.20260424.102714" "Simple focus mode and extras" '((emacs "27.1")) :commit "dc6f238d9c9da807a187842259fc7e810cad5ab6" :authors '(("Protesilaos" . "info@protesilaos.com")) :maintainer '("Protesilaos" . "info@protesilaos.com") :keywords '("convenience" "focus" "writing" "presentation" "narrowing") :url "https://github.com/protesilaos/logos")
